@@ -1,0 +1,64 @@
+{
+  "name": "sam-typescript-dynamodb-ioc",
+  "version": "1.0.0",
+  "description": "example that use sam aws typescript with dynamodb ioc",
+  "main": "src/app.js",
+  "author": "Hatim Heffoudhi",
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "scripts": {
+    "build": "webpack -d",
+    "build:watch": "webpack -d --watch",
+    "build:production": "webpack -p",
+    "lint": "eslint 'src/**/*.ts'",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "sonar-scanner": "sonar-scanner",
+    "start:lambda": "sam local start-api --template .sam-template.yml -p 3010 --docker-network host",
+    "package": "aws cloudformation package --region eu-west-1 --template-file .sam-template.yml --s3-bucket artifact-bucket --output-template-file packaged.yml",
+    "deploy": "aws cloudformation deploy --region eu-west-1 --template-file packaged.yml --stack-name artifact-bucket  --capabilities CAPABILITY_IAM"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "preset": "ts-jest",
+    "clearMocks": true,
+    "testRegex": "(/test/.+Test)\\.ts",
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ]
+  },
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.39",
+    "@types/lodash": "^4.14.149",
+    "@types/uuid": "^7.0.3",
+    "aws-sdk": "^2.596.0",
+    "inversify": "^5.0.1",
+    "inversify-binding-decorators": "^3.2.0",
+    "reflect-metadata": "^0.1.10",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/clean-webpack-plugin": "^0.1.3",
+    "@types/jest": "^24.0.25",
+    "@types/webpack": "^4.41.1",
+    "@types/webpack-bundle-analyzer": "^2.13.3",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "jest-sonar-reporter": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "sonarqube-scanner": "^2.6.0",
+    "ts-jest": "^24.2.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-cli": "^3.3.10"
+  }
+}

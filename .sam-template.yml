@@ -1,0 +1,171 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-typescript-dynamodb-ioc
+
+  SAM Template, contains all required resources for the sam-typescript-dynamodb-ioc
+
+
+# ██████╗  █████╗ ██████╗  █████╗ ███╗   ███╗███████╗████████╗███████╗██████╗ ███████╗
+# ██╔══██╗██╔══██╗██╔══██╗██╔══██╗████╗ ████║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔════╝
+# ██████╔╝███████║██████╔╝███████║██╔████╔██║█████╗     ██║   █████╗  ██████╔╝███████╗
+# ██╔═══╝ ██╔══██║██╔══██╗██╔══██║██║╚██╔╝██║██╔══╝     ██║   ██╔══╝  ██╔══██╗╚════██║
+# ██║     ██║  ██║██║  ██║██║  ██║██║ ╚═╝ ██║███████╗   ██║   ███████╗██║  ██║███████║
+# ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝
+
+Parameters:
+  LambdaNodeEnv:
+    Type: String
+    Default: 'dev'
+  TableName:
+    Type: String
+    Default: 'user-table'
+
+# ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗          ██████╗ ██████╗ ███╗   ██╗███████╗
+#██╔════╝ ██║     ██╔═══██╗██╔══██╗██╔══██╗██║         ██╔════╝██╔═══██╗████╗  ██║██╔════╝
+#██║  ███╗██║     ██║   ██║██████╔╝███████║██║         ██║     ██║   ██║██╔██╗ ██║█████╗
+#██║   ██║██║     ██║   ██║██╔══██╗██╔══██║██║         ██║     ██║   ██║██║╚██╗██║██╔══╝
+#╚██████╔╝███████╗╚██████╔╝██████╔╝██║  ██║███████╗    ╚██████╗╚██████╔╝██║ ╚████║██║
+#╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝
+
+Globals:
+  Function:
+    Handler: ./app.handler
+    Runtime: nodejs10.x
+    MemorySize: 1024
+    Timeout: 60
+    Environment:
+      Variables:
+        LAMBDA_NODE_ENV: !Ref LambdaNodeEnv
+        TABLE_NAME: !Ref TableName
+  Api:
+    # enable CORS; to make more specific, change the origin wildcard
+    Cors:
+      AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+      AllowOrigin: "'*'"
+
+
+
+Resources:
+
+# █████╗ ██████╗ ██╗     ██████╗  █████╗ ████████╗███████╗██╗    ██╗ █████╗ ██╗   ██╗
+#██╔══██╗██╔══██╗██║    ██╔════╝ ██╔══██╗╚══██╔══╝██╔════╝██║    ██║██╔══██╗╚██╗ ██╔╝
+#███████║██████╔╝██║    ██║  ███╗███████║   ██║   █████╗  ██║ █╗ ██║███████║ ╚████╔╝
+#██╔══██║██╔═══╝ ██║    ██║   ██║██╔══██║   ██║   ██╔══╝  ██║███╗██║██╔══██║  ╚██╔╝
+#██║  ██║██║     ██║    ╚██████╔╝██║  ██║   ██║   ███████╗╚███╔███╔╝██║  ██║   ██║
+#╚═╝  ╚═╝╚═╝     ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝
+#═════════════════════════════════════════════════════════════════════════════════
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+
+
+#██╗      █████╗ ███╗   ███╗██████╗ ██████╗  █████╗ ███████╗
+#██║     ██╔══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗██╔════╝
+#██║     ███████║██╔████╔██║██████╔╝██║  ██║███████║███████╗
+#██║     ██╔══██║██║╚██╔╝██║██╔══██╗██║  ██║██╔══██║╚════██║
+#███████╗██║  ██║██║ ╚═╝ ██║██████╔╝██████╔╝██║  ██║███████║
+#╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+#════════════════════════════════════════════════════════════
+  LoginFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'usr-api-login-function'
+      CodeUri: ./dist/user-login-function
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
+      Events:
+        SearchPost:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /user/login
+            Method: POST
+  CreateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'usr-api-create-user-function'
+      CodeUri: ./dist/user-create-function
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
+      Events:
+        GetUserById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /user
+            Method: POST
+  GetUserById:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'usr-api-get-by-id-function'
+      CodeUri: ./dist/user-get-by-id-function
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
+      Events:
+        GetUserById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /user/{id}
+            Method: GET
+  GetAllUsers:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'usr-api-get-all-function'
+      CodeUri: ./dist/user-get-all-function
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TableName
+      Events:
+        GetUserByIdPost:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /user
+            Method: GET
+
+#████████╗ █████╗ ██████╗ ██╗     ███████╗███████╗
+#╚══██╔══╝██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝
+#   ██║   ███████║██████╔╝██║     █████╗  ███████╗
+#   ██║   ██╔══██║██╔══██╗██║     ██╔══╝  ╚════██║
+#   ██║   ██║  ██║██████╔╝███████╗███████╗███████║
+#   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝
+# ════════════════════════════════════════════════
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: !Ref TableName
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+        - AttributeName: gsi
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '2'
+        WriteCapacityUnits: '2'
+      GlobalSecondaryIndexes:
+        - IndexName: UserGSI
+          KeySchema:
+            - AttributeName: gsi
+              KeyType: HASH
+            - AttributeName: sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: '2'
+            WriteCapacityUnits: '2'
