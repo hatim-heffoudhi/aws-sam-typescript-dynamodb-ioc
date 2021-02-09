@@ -1,7 +1,7 @@
 {
   "name": "sam-typescript-dynamodb-ioc",
   "version": "1.0.0",
-  "description": "example that use sam aws typescript with dynamodb ioc",
+  "description": "example that use sam aws typescript DDD with dynamodb ioc",
   "main": "src/app.js",
   "author": "Hatim Heffoudhi",
   "license": "GNU GENERAL PUBLIC LICENSE",
@@ -13,9 +13,10 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "sonar-scanner": "sonar-scanner",
-    "start:lambda": "sam local start-api --template .sam-template.yml -p 3010 --docker-network host",
-    "package": "aws cloudformation package --region eu-west-1 --template-file .sam-template.yml --s3-bucket artifact-bucket --output-template-file packaged.yml",
-    "deploy": "aws cloudformation deploy --region eu-west-1 --template-file packaged.yml --stack-name artifact-bucket  --capabilities CAPABILITY_IAM"
+    "start": "run-p build:watch start:lambda",
+    "start:lambda": "sam local start-api --template .sam-template.yml -p 3000 --docker-network host",
+    "package": "sam package --region eu-west-1 --template-file .sam-template.yml --s3-bucket artifact-bucket --output-template-file packaged.yml",
+    "deploy": "sam cloudformation deploy --region eu-west-1 --template-file packaged.yml --stack-name sam-typescript-dynamodb-ioc --capabilities CAPABILITY_IAM"
   },
   "jest": {
     "testEnvironment": "node",
