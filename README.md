@@ -3,11 +3,7 @@
 ![image](./schema.png)
 
 
-This project contains source code and supporting files for a typescript serverless application which use DDD approche with ioc  that you can deploy with the SAM CLI. 
-
-Can we use DDD  ? yes !
-Can we IOC with decorator ? yes !
-Can we use mapper and entities, infrastructure... ? yes !
+This project contains source code and supporting files for a DDD typescript serverless application which ioc (injection with decorator)   that you can deploy with the SAM CLI. 
 
 It includes the following files and folders :
 
@@ -41,7 +37,7 @@ To use the SAM CLI, you need the following tools.
 The SAM CLI uses an Amazon S3 bucket to store your application's deployment artifacts. If you don't have a bucket suitable for this purpose, create one. Replace `BUCKET_NAME` in the commands in this section with a unique bucket name.
 
 ```bash
-sam-typescript-dynamodb-ioc$ aws s3 mb s3://BUCKET_NAME
+sam-typescript-dynamodb-ioc$ aws s3 mb s3://artifact-bucket 
 ```
 
 To prepare the application for deployment, use the `npm run  package` command.
@@ -70,7 +66,7 @@ The SAM CLI can also emulate your application's API. Use the `sam local start-ap
 
 ```bash
 sam-typescript-dynamodb-ioc$ npm start
-sam-typescript-dynamodb-ioc$  curl http://localhost:3000/
+sam-typescript-dynamodb-ioc$ curl http://localhost:3000/user
 ```
 
 The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
