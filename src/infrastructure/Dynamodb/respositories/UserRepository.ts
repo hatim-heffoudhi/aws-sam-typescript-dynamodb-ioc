@@ -25,6 +25,7 @@ export class UserRepository implements UserRepositoryInterface {
      */
     constructor() {
         this.dynamoDBClient = new DynamoDB.DocumentClient();
+        // if mode local or dev ==> dynamodb Locally
         if (process.env.LAMBDA_NODE_ENV == 'local') {
             let serviceConfigOptions: ServiceConfigurationOptions = {
                 region: 'us-west-2',
