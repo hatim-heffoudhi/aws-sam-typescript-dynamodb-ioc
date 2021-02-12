@@ -1,4 +1,4 @@
-# sam-typescript-dynamodb-ioc
+# aws-sam-typescript-dynamodb-ioc
 
 ![image](./schema.png)
 
@@ -52,20 +52,20 @@ To use the SAM CLI, you need the following tools.
 Then Install dependencies 
 
 ```bash
-sam-typescript-dynamodb-ioc$ npm install
+aws-sam-typescript-dynamodb-ioc$ npm install
 ```
 
 Specify your profile to point your AWS account and run the following command
 
 ```bash
-sam-typescript-dynamodb-ioc$ npm start
+aws-sam-typescript-dynamodb-ioc$ npm start
 ```
 
 This will run the  SAM emulator based on docker. Access to the application on port 3000, unfortunately there is no Swagger now, but you can add users and acces it based on the path on the event
 
 ```bash
-sam-typescript-dynamodb-ioc$ curl http://localhost:3000/user
-sam-typescript-dynamodb-ioc$ curl http://localhost:3000/user/id
+aws-sam-typescript-dynamodb-ioc$ curl http://localhost:3000/user
+aws-sam-typescript-dynamodb-ioc$ curl http://localhost:3000/user/id
 ```
 
 The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
@@ -115,10 +115,10 @@ The application template uses AWS Serverless Application Model (AWS SAM) to defi
 Access to your account in CloudFormation 
 
 ```bash
-sam-app$ aws cloudformation delete-stack --stack-name sam-typescript-dynamodb-ioc
+aws-sam-typescript-dynamodb-ioc$ aws cloudformation delete-stack --stack-name sam-typescript-dynamodb-ioc
 ```
 
 
 ```bash
-sam-app$ aws s3 rb  s3://artifact-bucket 
+aws-sam-typescript-dynamodb-ioc$ aws s3 rb  s3://artifact-bucket 
 ```
