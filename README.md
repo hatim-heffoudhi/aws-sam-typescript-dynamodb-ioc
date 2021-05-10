@@ -124,8 +124,8 @@ aws-sam-typescript-dynamodb-ioc$ aws s3 rb  s3://artifact-bucket
 ```
 
 ## Maintainers  :
-Big Thanks to our dev soldiers  : 
+Big Thanks to our maintainers 💪💪💪  : 
 
-- Elhadj NDIAYE 
+- Elhadj NDIAYE
 - Brendan Daoud https://github.com/granipouss
 - Hatim HEFFOUDHI  https://github.com/hatim-heffoudhi
