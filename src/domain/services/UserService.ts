@@ -1,5 +1,5 @@
 import { User } from '../model/User';
-import { inject, service } from '../../zconfig/ioc';
+import { inject, service } from '@config/ioc';
 import { UserRepository } from '../../infrastructure/Dynamodb/respositories/UserRepository';
 
 /**
@@ -14,10 +14,7 @@ export class UserService {
      * @param user
      */
     async saveUser(user: User): Promise<User> {
-        // validate user method
-        // utils
         return await this.userRepository.saveUser(user);
-        // return user saved (mapper)
     }
 
     async getAllUsers(): Promise<User[]> {

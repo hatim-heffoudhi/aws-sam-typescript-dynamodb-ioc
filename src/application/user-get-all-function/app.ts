@@ -1,9 +1,8 @@
-// src/hello.ts
 
 import {APIGatewayEvent} from 'aws-lambda';
-import {User} from '../../domain/model/User';
-import {iocContainer} from '../../zconfig/ioc';
-import {UserService} from '../../domain/services/UserService';
+import {User} from '@domain/model/User';
+import {iocContainer} from '@config/ioc';
+import {UserService} from '@domain/services/UserService';
 import 'reflect-metadata';
 
 /**

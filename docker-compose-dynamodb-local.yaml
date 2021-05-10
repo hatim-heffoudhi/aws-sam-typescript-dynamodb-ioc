@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  dynamodb:
+    container_name: dynamodb-local
+    image: amazon/dynamodb-local
+    volumes:
+      - ./data:/data
+    ports:
+      - 8000:8000
+    command: -jar DynamoDBLocal.jar -port 8000 -dbPath /data -sharedDb
+    networks:
+      - aws-sam-local
+
+networks:
+  aws-sam-local:
+    external: true

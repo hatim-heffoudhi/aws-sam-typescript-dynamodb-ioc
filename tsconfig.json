@@ -13,8 +13,8 @@
 
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/lib/*"],
-      "@domains/*": ["src/domains/*"]
+      "@config/*": ["src/zconfig/*"],
+      "@domain/*": ["src/domain/*"]
     }
   },
   "include": ["./**/*.ts"],

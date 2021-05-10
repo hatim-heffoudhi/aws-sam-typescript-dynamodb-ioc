@@ -16,9 +16,11 @@ Description: >
 Parameters:
   LambdaNodeEnv:
     Type: String
-    Default: 'dev'
+    Description: 'The node environment variable ( local, dev, staging, prod...)'
+    Default: 'local'
   TableName:
     Type: String
+    Description: 'The name of the Dynamodb table'
     Default: 'user-table'
 
 # ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗          ██████╗ ██████╗ ███╗   ██╗███████╗

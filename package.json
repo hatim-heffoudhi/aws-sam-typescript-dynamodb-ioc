@@ -9,8 +9,8 @@
     "build": "webpack -d",
     "build:watch": "webpack -d --watch",
     "build:production": "webpack -p",
-    "start": "run-p build:watch start:lambda",
-    "start:project": "sam local start-api --template .sam-template.yml -p 3000 --docker-network host",
+    "start": "run-p build:watch start:project",
+    "start:project": "sam local start-api --template .sam-template.yml -p 3000 --docker-network aws-sam-local",
     "package": "sam package --region eu-west-1 --template-file .sam-template.yml --s3-bucket artifact-bucket --output-template-file packaged.yml",
     "deploy": "sam cloudformation deploy --region eu-west-1 --template-file packaged.yml --stack-name sam-typescript-dynamodb-ioc --capabilities CAPABILITY_IAM"
   },

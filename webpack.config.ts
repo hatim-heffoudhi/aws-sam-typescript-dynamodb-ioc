@@ -33,8 +33,8 @@ const config: Configuration = {
     resolve: {
         extensions: ['.ts', '.js'],
         alias: {
-            '@lib': resolve(__dirname, './src/lib'),
             '@domain': resolve(__dirname, './src/domain'),
+            '@config': resolve(__dirname, './src/zconfig'),
         },
     },
     plugins: [

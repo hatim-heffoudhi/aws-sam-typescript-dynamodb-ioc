@@ -3,11 +3,11 @@ import * as uuid from 'uuid';
 import { DynamoDB } from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { UserEntity } from '../model/UserEntity';
-import { UserRepositoryInterface } from '../../../domain/repositories/UserRepositoryInterface';
-import { User } from '../../../domain/model/User';
+import { UserRepositoryInterface } from '@domain/repositories/UserRepositoryInterface';
+import { User } from '@domain/model/User';
 import { UserMapper } from '../mapper/UserMapper';
 import { DocumentClient } from 'aws-sdk/lib/dynamodb/document_client';
-import { repository } from '../../../zconfig/ioc';
+import { repository } from '@config/ioc';
 import ScanInput = DocumentClient.ScanInput;
 
 /**
@@ -29,7 +29,7 @@ export class UserRepository implements UserRepositoryInterface {
         if (process.env.LAMBDA_NODE_ENV == 'local') {
             let serviceConfigOptions: ServiceConfigurationOptions = {
                 region: 'us-west-2',
-                endpoint: 'http://localhost:8000',
+                endpoint: 'http://dynamodb-local:8000',
             };
             this.dynamoDBClient = new DynamoDB.DocumentClient(serviceConfigOptions);
         }
