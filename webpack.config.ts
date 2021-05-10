@@ -1,23 +1,14 @@
+import { Configuration } from 'webpack';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
 
-import { Configuration, BannerPlugin } from 'webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-
-const LAMBDA_DIR = './src/application';
-
-const version =
-    process.env.CODEBUILD_RESOLVED_SOURCE_VERSION ||
-    require('child_process')
-        .execSync('git rev-parse HEAD')
-        .toString()
-        .trim();
-
+const APPLICATIONS = './src/application';
+const MAIN = 'app.ts';
 const entry: Record<string, string> = {};
-readdirSync(LAMBDA_DIR).forEach(folder => {
-    readdirSync(`${LAMBDA_DIR}`).forEach(lambda => {
-        entry[lambda] = resolve(LAMBDA_DIR, lambda, 'app.ts');
+readdirSync(APPLICATIONS).forEach(folder => {
+    readdirSync(`${APPLICATIONS}`).forEach(application => {
+        entry[application] = resolve(APPLICATIONS, application, MAIN);
     });
 });
 
@@ -47,13 +38,7 @@ const config: Configuration = {
         },
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new BundleAnalyzerPlugin({
-            openAnalyzer: false,
-            analyzerMode: 'static',
-            reportFilename: '../report.html',
-        }),
-        new BannerPlugin(`Git Version #${version}`),
+        new CleanWebpackPlugin()
     ],
 };
 

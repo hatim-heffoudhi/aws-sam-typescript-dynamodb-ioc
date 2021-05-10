@@ -122,3 +122,10 @@ aws-sam-typescript-dynamodb-ioc$ aws cloudformation delete-stack --stack-name sa
 ```bash
 aws-sam-typescript-dynamodb-ioc$ aws s3 rb  s3://artifact-bucket 
 ```
+
+## Maintainers  :
+Big Thanks to our dev soldiers  : 
+
+- Elhadj NDIAYE 
+- Brendan Daoud https://twitter.com/granipouss
+- Hatim HEFFOUDHI  https://github.com/hatim-heffoudhi
